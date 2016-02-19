@@ -1,7 +1,8 @@
 FROM ubuntu
 MAINTAINER leifj@sunet.se
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get update
+RUN apt-get -q update
+RUN apt-get -y upgrade
 RUN apt-get -y install apache2
 RUN a2enmod rewrite
 RUN mkdir -p /var/www
