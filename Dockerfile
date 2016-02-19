@@ -10,4 +10,6 @@ COPY /start.sh /
 RUN chmod a+rx /start.sh
 COPY /apache2.conf /etc/apache2/
 EXPOSE 80
+EXPOSE 443
+VOLUME /etc/ssl
 ENTRYPOINT ["/start.sh"]

@@ -1,9 +1,12 @@
+NAME=always-https
+VERSION=latest
+
 all: build push
 build:
-	docker build --no-cache=true -t always-https .
-	docker tag -f always-https docker.sunet.se/always-https
+	docker build --no-cache=true -t ${NAME}:${VERSION} .
+	docker tag -f ${NAME}:${VERSION} docker.sunet.se/${NAME}:${VERSION}
 update:
-	docker build -t always-https .
-	docker tag -f always-https docker.sunet.se/always-https
+	docker build -t ${NAME}:${VERSION} .
+	docker tag -f ${NAME}:${VERSION} docker.sunet.se/${NAME}:${VERSION}
 push:
-	docker push docker.sunet.se/always-https	
+	docker push docker.sunet.se/${NAME}:${VERSION}
