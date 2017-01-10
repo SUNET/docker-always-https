@@ -3,6 +3,20 @@
 rm -f /etc/apache2/sites-available/*
 rm -f /etc/apache2/sites-enabled/*
 
+# optionally ship acme challenges to an external tool
+
+if [ ! -z "${ACME_URL}" ]; then
+
+cat>/etc/apache2/conf-available/acme.conf<<EOF
+ProxyPass /.well-known/acme-challenge ${ACME_URL}/.well-known/acme-challenge/
+ProxyPassReverse /.well-known/acme-challenge ${ACME_URL}/.well-known/acme-challenge/
+EOF
+a2enconf acme
+a2enmod proxy proxy_http
+
+fi
+
+
 if [ -z "${URLS}" ]; then
 
 # In this mode we only redirect to https on $self
@@ -16,7 +30,7 @@ if [ -z "${URLS}" ]; then
 
        RewriteEngine On
        RewriteCond %{HTTPS} off
-       RewriteRule !_lvs.txt$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
+       RewriteRule !(_lvs.txt|.well-known/acme-challenge.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
 </VirtualHost>
 EOF
 
