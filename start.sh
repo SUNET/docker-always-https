@@ -49,7 +49,7 @@ else
 
        RewriteEngine On
        RewriteCond %{HTTPS} off
-       RewriteRule !_lvs.txt$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
+       RewriteRule !(_lvs.txt|.well-known/acme-challenge.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
 </VirtualHost>
 EOF
 
