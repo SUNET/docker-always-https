@@ -111,7 +111,7 @@ a2ensite default
 fi
 
 if ! grep -q "ErrorLog /dev/stderr" /etc/apache2/apache2.conf; then
-    sed -E 's#^ErrorLog .+$#ErrorLog /dev/stderr#g' /etc/apache2/apache2.conf
+    sed -iE 's#^ErrorLog .+$#ErrorLog /dev/stderr#g' /etc/apache2/apache2.conf
 fi
 
 if ! grep -q "TransferLog /dev/stdout" /etc/apache2/apache2.conf; then
