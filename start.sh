@@ -110,6 +110,15 @@ a2ensite default-ssl
 a2ensite default
 fi
 
+if ! grep -q "ErrorLog /dev/stderr" /etc/apache2/apache2.conf; then
+    sed -E 's#^ErrorLog .+$#ErrorLog /dev/stderr#g' /etc/apache2/apache2.conf
+fi
+
+if ! grep -q "TransferLog /dev/stdout" /etc/apache2/apache2.conf; then
+    echo "TransferLog /dev/stdout" > /etc/apache2/apache2.conf
+    a2disconf other-vhosts-access-log
+fi
+
 mkdir -p /var/log/apache2 /var/lock/apache2 /var/run/apache2
 chown -R www-data:www-data /var/log/apache2 /var/lock/apache2 /var/run/apache2
 
