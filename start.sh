@@ -115,7 +115,7 @@ if ! grep -q "ErrorLog /dev/stderr" /etc/apache2/apache2.conf; then
 fi
 
 if ! grep -q "TransferLog /dev/stdout" /etc/apache2/apache2.conf; then
-    echo "TransferLog /dev/stdout" > /etc/apache2/apache2.conf
+    echo "TransferLog /dev/stdout" >> /etc/apache2/apache2.conf
     a2disconf other-vhosts-access-log
 fi
 
