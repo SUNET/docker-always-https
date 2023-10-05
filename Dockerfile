@@ -5,8 +5,6 @@ RUN apt-get -q update
 RUN apt-get -y upgrade
 RUN apt-get -y install apache2
 RUN a2enmod rewrite
-RUN mkdir -p /var/www
-COPY _lvs.txt /var/www/
 COPY /start.sh /
 RUN chmod a+rx /start.sh
 EXPOSE 80

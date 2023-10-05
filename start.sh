@@ -21,6 +21,7 @@ if [ -z "${URLS}" ]; then
 
 # In this mode we only redirect to https on $self
 
+   mkdir -p /var/www
    echo "ok" > /var/www/_lvs.txt
    cat>/etc/apache2/sites-available/default.conf<<EOF
 <VirtualHost *:80>
