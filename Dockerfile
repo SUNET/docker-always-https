@@ -1,5 +1,4 @@
 FROM debian:bullseye
-MAINTAINER leifj@sunet.se
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 RUN apt-get -q update
 RUN apt-get -y upgrade
