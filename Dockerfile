@@ -1,8 +1,10 @@
-FROM debian:bullseye
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
-RUN apt-get -q update
-RUN apt-get -y upgrade
-RUN apt-get -y install apache2
+FROM debian:trixie
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get -q update && \
+    apt-get -y upgrade && \
+    apt-get -y install --no-install-recommends apache2 ssl-cert && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 RUN a2enmod rewrite
 COPY /start.sh /
 RUN chmod a+rx /start.sh

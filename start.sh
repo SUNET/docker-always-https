@@ -16,13 +16,14 @@ a2enmod proxy proxy_http
 
 fi
 
+# health check file, excluded from the https redirect in both modes
+mkdir -p /var/www
+echo "ok" > /var/www/_lvs.txt
 
 if [ -z "${URLS}" ]; then
 
 # In this mode we only redirect to https on $self
 
-   mkdir -p /var/www
-   echo "ok" > /var/www/_lvs.txt
    cat>/etc/apache2/sites-available/default.conf<<EOF
 <VirtualHost *:80>
        ServerAdmin noc@sunet.se
@@ -86,7 +87,7 @@ fi
        DocumentRoot /var/www/
 
        ServerName ${HOSTNAME}
-       SSLProtocol All -SSLv2 -SSLv3
+       SSLProtocol -all +TLSv1.2 +TLSv1.3
        SSLCompression Off
        SSLCipherSuite "EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+AESGCM EECDH EDH+AESGCM EDH+aRSA HIGH !MEDIUM !LOW !aNULL !eNULL !LOW !RC4 !MD5 !EXP !PSK !SRP !DSS"
        SSLEngine On
@@ -111,7 +112,7 @@ a2ensite default
 fi
 
 if ! grep -q "ErrorLog /dev/stderr" /etc/apache2/apache2.conf; then
-    sed -iE 's#^ErrorLog .+$#ErrorLog /dev/stderr#g' /etc/apache2/apache2.conf
+    sed -i -E 's#^ErrorLog .+$#ErrorLog /dev/stderr#g' /etc/apache2/apache2.conf
 fi
 
 if ! grep -q "TransferLog /dev/stdout" /etc/apache2/apache2.conf; then
