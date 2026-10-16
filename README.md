@@ -1,4 +1,1 @@
-Redirect to https
------------------
-
-Redirect everything to the same vhost on https
+MIGRATED TO https://platform.sunet.se/platform/docker-always-https
