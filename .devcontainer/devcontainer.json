@@ -1,0 +1,43 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/go
+{
+	"name": "Go",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"args": {
+			"GO_VERSION": "1.27.0"
+		}
+	},
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"cSpell.language": "en-GB,en,sv",
+				"dev.containers.mountWaylandSocket": false
+			},
+			"extensions": [
+				"golang.Go",
+				"GitHub.vscode-pull-request-github",
+				"streetsidesoftware.code-spell-checker",
+				"DavidAnson.vscode-markdownlint",
+				"zenor.makefile-creator",
+				"Plex.vscode-protolint",
+				"ms-azuretools.vscode-docker",
+				"zenghongtu.vscode-asciiflow2",
+				"Gruntfuggly.todo-tree",
+				"tomoki1207.pdf"
+			]
+		}
+	},
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker.sock,type=bind"
+	],
+	"features": {
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+			"version": "latest",
+			"moby": false,
+			"installDockerBuildx": true
+		}
+	},
+	"postCreateCommand": "make vscode",
+	"remoteUser": "vscode"
+}
